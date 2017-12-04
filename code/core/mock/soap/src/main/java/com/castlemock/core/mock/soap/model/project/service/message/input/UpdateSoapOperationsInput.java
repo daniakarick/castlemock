@@ -14,22 +14,51 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.web.mvc.command.operation;
+package com.castlemock.core.mock.soap.model.project.service.message.input;
 
+import com.castlemock.core.basis.model.Input;
+import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 
 import java.util.List;
 
 /**
- * The UpdateServicesEndpointCommand is a command class and is used to identify which operation
- * will be updated with a new endpoint
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapOperationsEndpointCommand {
+public class UpdateSoapOperationsInput implements Input {
 
+    @NotNull
+    private String soapProjectId;
+    @NotNull
+    private String soapPortId;
+    @NotNull
     private List<SoapOperationDto> soapOperations;
+    @NotNull
     private String forwardedEndpoint;
+
+    public UpdateSoapOperationsInput(String soapProjectId, String soapPortId, List<SoapOperationDto> soapOperations, String forwardedEndpoint) {
+        this.soapProjectId = soapProjectId;
+        this.soapPortId = soapPortId;
+        this.soapOperations = soapOperations;
+        this.forwardedEndpoint = forwardedEndpoint;
+    }
+
+    public String getSoapProjectId() {
+        return soapProjectId;
+    }
+
+    public void setSoapProjectId(String soapProjectId) {
+        this.soapProjectId = soapProjectId;
+    }
+
+    public String getSoapPortId() {
+        return soapPortId;
+    }
+
+    public void setSoapPortId(String soapPortId) {
+        this.soapPortId = soapPortId;
+    }
 
     public List<SoapOperationDto> getSoapOperations() {
         return soapOperations;
@@ -39,20 +68,11 @@ public class UpdateSoapOperationsEndpointCommand {
         this.soapOperations = soapOperations;
     }
 
-    /**
-     * Returns the forwarded endpoint
-     * @return The forwarded endpoint
-     */
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    /**
-     * Sets a new value for the forwarded endpoint
-     * @param forwardedEndpoint The new value for forwarded endpoint
-     */
     public void setForwardedEndpoint(String forwardedEndpoint) {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 }
-

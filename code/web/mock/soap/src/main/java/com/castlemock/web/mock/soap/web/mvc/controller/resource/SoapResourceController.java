@@ -16,18 +16,11 @@
 
 package com.castlemock.web.mock.soap.web.mvc.controller.resource;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapResourceDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.*;
 import com.castlemock.core.mock.soap.model.project.service.message.output.LoadSoapResourceOutput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapResourceOutput;
-import com.castlemock.web.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
-import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -35,8 +28,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The SoapResourceController provides functionality to retrieve a specific resource for a project

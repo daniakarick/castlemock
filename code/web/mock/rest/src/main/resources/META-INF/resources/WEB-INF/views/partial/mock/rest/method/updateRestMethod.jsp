@@ -48,7 +48,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="column1"><spring:message code="rest.updatemethod.label.methodstatus"/></td>
+                    <td class="column1"><spring:message code="rest.updaterestresources.label.methodstatus"/></td>
                     <td>
                         <form:select path="status">
                             <c:forEach items="${restMethodStatuses}" var="restMethodStatus">
@@ -59,7 +59,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="column1"><spring:message code="rest.updatemethod.label.responsestrategy"/></td>
+                    <td class="column1"><spring:message code="rest.updaterestresources.label.responsestrategy"/></td>
                     <td>
                         <form:select path="responseStrategy">
                             <c:forEach items="${restResponsestrategies}" var="restResponseStrategy">

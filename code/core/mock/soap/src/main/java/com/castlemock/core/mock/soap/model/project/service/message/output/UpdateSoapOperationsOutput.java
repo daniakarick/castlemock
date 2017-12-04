@@ -23,7 +23,7 @@ import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapPortsForwardedEndpointOutput implements Output {
+public class UpdateSoapOperationsOutput implements Output {
 
     private SoapProjectDto updatedSoapProject;
 

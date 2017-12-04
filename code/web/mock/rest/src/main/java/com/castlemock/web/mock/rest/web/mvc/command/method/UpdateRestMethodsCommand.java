@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.web.mvc.command.resource;
+package com.castlemock.web.mock.rest.web.mvc.command.method;
 
 
-import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 
 import java.util.List;
 
 /**
- * The UpdateRestResourcesEndpointCommand is a command class and is used to identify which resource
+ * The UpdateRestMethodsEndpointCommand is a command class and is used to identify which methods
  * will be updated with a new endpoint
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestResourcesEndpointCommand {
+public class UpdateRestMethodsCommand {
 
-    private List<RestResourceDto> restResources;
+    private List<RestMethodDto> restMethods;
     private String forwardedEndpoint;
 
-    public List<RestResourceDto> getRestResources() {
-        return restResources;
+    public List<RestMethodDto> getRestMethods() {
+        return restMethods;
     }
 
-    public void setRestResources(List<RestResourceDto> restResources) {
-        this.restResources = restResources;
+    public void setRestMethods(List<RestMethodDto> restMethods) {
+        this.restMethods = restMethods;
     }
 
     /**

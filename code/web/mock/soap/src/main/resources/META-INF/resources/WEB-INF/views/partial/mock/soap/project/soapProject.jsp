@@ -112,14 +112,8 @@
                                 </table>
                             </div>
                             <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                                <form:select path="soapPortStatus">
-                                    <c:forEach items="${soapOperationStatuses}" var="soapOperationStatus">
-                                        <form:option value="${soapOperationStatus}"><spring:message code="soap.type.soapoperationstatus.${soapOperationStatus}"/></form:option>
-                                    </c:forEach>
-                                </form:select>
-                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapproject.button.update"/></span></button>
-                                <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="soap.soapproject.button.updateendpoint"/></span></button>
-                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.deleteport"/></span></button>
+                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapproject.button.updateports"/></span></button>
+                                <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapproject.button.deleteports"/></span></button>
                             </sec:authorize>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form:form>

@@ -14,23 +14,40 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.web.mvc.command.application;
+package com.castlemock.core.mock.rest.model.project.service.message.input;
 
-
+import com.castlemock.core.basis.model.Input;
+import com.castlemock.core.basis.model.validation.NotNull;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 
 import java.util.List;
 
 /**
- * The UpdateRestApplicationsEndpointCommand is a command class and is used to identify which application
- * will be updated with a new endpoint
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestApplicationsEndpointCommand {
+public class UpdateRestApplicationsInput implements Input {
 
+    @NotNull
+    private String restProjectId;
+    @NotNull
     private List<RestApplicationDto> restApplications;
+    @NotNull
     private String forwardedEndpoint;
+
+    public UpdateRestApplicationsInput(String restProjectId, List<RestApplicationDto> restApplications, String forwardedEndpoint) {
+        this.restProjectId = restProjectId;
+        this.restApplications = restApplications;
+        this.forwardedEndpoint = forwardedEndpoint;
+    }
+
+    public String getRestProjectId() {
+        return restProjectId;
+    }
+
+    public void setRestProjectId(String restProjectId) {
+        this.restProjectId = restProjectId;
+    }
 
     public List<RestApplicationDto> getRestApplications() {
         return restApplications;
@@ -40,20 +57,11 @@ public class UpdateRestApplicationsEndpointCommand {
         this.restApplications = restApplications;
     }
 
-    /**
-     * Returns the forwarded endpoint
-     * @return The forwarded endpoint
-     */
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    /**
-     * Sets a new value for the forwarded endpoint
-     * @param forwardedEndpoint The new value for forwarded endpoint
-     */
     public void setForwardedEndpoint(String forwardedEndpoint) {
         this.forwardedEndpoint = forwardedEndpoint;
     }
 }
-

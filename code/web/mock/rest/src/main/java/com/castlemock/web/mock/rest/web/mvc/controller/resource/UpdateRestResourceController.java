@@ -19,9 +19,9 @@ package com.castlemock.web.mock.rest.web.mvc.controller.resource;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestResourceInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourceInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesForwardedEndpointInput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestResourceOutput;
-import com.castlemock.web.mock.rest.web.mvc.command.resource.UpdateRestResourcesEndpointCommand;
+import com.castlemock.web.mock.rest.web.mvc.command.resource.UpdateRestResourcesCommand;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import com.google.common.base.Preconditions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -69,15 +69,15 @@ public class UpdateRestResourceController extends AbstractRestViewController {
      * resources at once
      * @param restProjectId The id of the project that the resources belongs to
      * @param restApplicationId The id of the application that the resources belongs to
-     * @param updateRestResourcesEndpointCommand The command object contains both the resources that
+     * @param command The command object contains both the resources that
      *                                          will be updated and the new forwarded address
      * @return Redirects the user to the application page
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/update/confirm", method = RequestMethod.POST)
-    public ModelAndView updateEndpoint(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @ModelAttribute final UpdateRestResourcesEndpointCommand updateRestResourcesEndpointCommand) {
-        Preconditions.checkNotNull(updateRestResourcesEndpointCommand, "The update application endpoint command cannot be null");
-        serviceProcessor.process(new UpdateRestResourcesForwardedEndpointInput(restProjectId, restApplicationId, updateRestResourcesEndpointCommand.getRestResources(), updateRestResourcesEndpointCommand.getForwardedEndpoint()));
+    public ModelAndView updateResources(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @ModelAttribute final UpdateRestResourcesCommand command) {
+        Preconditions.checkNotNull(command, "The update application endpoint command cannot be null");
+        serviceProcessor.process(new UpdateRestResourcesInput(restProjectId, restApplicationId, command.getRestResources(), command.getForwardedEndpoint()));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId);
     }
 

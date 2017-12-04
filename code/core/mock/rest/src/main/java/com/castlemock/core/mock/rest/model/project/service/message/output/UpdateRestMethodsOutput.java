@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package com.castlemock.core.mock.soap.model.project.service.message.output;
+package com.castlemock.core.mock.rest.model.project.service.message.output;
 
 import com.castlemock.core.basis.model.Output;
-import com.castlemock.core.mock.soap.model.project.dto.SoapProjectDto;
+import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapOperationsForwardedEndpointOutput implements Output {
+public class UpdateRestMethodsOutput implements Output {
 
-    private SoapProjectDto updatedSoapProject;
+    private RestProjectDto updatedRestProject;
 
-    public SoapProjectDto getUpdatedSoapProject() {
-        return updatedSoapProject;
+    public RestProjectDto getUpdatedRestProject() {
+        return updatedRestProject;
     }
 
-    public void setUpdatedSoapProject(SoapProjectDto updatedSoapProject) {
-        this.updatedSoapProject = updatedSoapProject;
+    public void setUpdatedRestProject(RestProjectDto updatedRestProject) {
+        this.updatedRestProject = updatedRestProject;
     }
 }

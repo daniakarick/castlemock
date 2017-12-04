@@ -20,15 +20,15 @@ import com.castlemock.core.basis.model.Service;
 import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapOperationsForwardedEndpointOutput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsInput;
+import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapOperationsOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateSoapOperationsForwardedEndpointService extends AbstractSoapProjectService implements Service<UpdateSoapOperationsForwardedEndpointInput, UpdateSoapOperationsForwardedEndpointOutput> {
+public class UpdateSoapOperationsService extends AbstractSoapProjectService implements Service<UpdateSoapOperationsInput, UpdateSoapOperationsOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -39,13 +39,13 @@ public class UpdateSoapOperationsForwardedEndpointService extends AbstractSoapPr
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<UpdateSoapOperationsForwardedEndpointOutput> process(final ServiceTask<UpdateSoapOperationsForwardedEndpointInput> serviceTask) {
-        final UpdateSoapOperationsForwardedEndpointInput input = serviceTask.getInput();
+    public ServiceResult<UpdateSoapOperationsOutput> process(final ServiceTask<UpdateSoapOperationsInput> serviceTask) {
+        final UpdateSoapOperationsInput input = serviceTask.getInput();
         for(SoapOperationDto soapOperationDto : input.getSoapOperations()){
             SoapOperationDto soapOperation = repository.findSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), soapOperationDto.getId());
             soapOperation.setForwardedEndpoint(input.getForwardedEndpoint());
             repository.updateSoapOperation(input.getSoapProjectId(), input.getSoapPortId(), soapOperationDto.getId(), soapOperationDto);
         }
-        return createServiceResult(new UpdateSoapOperationsForwardedEndpointOutput());
+        return createServiceResult(new UpdateSoapOperationsOutput());
     }
 }

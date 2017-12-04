@@ -26,7 +26,7 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestResourcesForwardedEndpointInput implements Input {
+public class UpdateRestResourcesInput implements Input {
 
     @NotNull
     private String restProjectId;
@@ -37,7 +37,7 @@ public class UpdateRestResourcesForwardedEndpointInput implements Input {
     @NotNull
     private String forwardedEndpoint;
 
-    public UpdateRestResourcesForwardedEndpointInput(String restProjectId, String restApplicationId, List<RestResourceDto> restResources, String forwardedEndpoint) {
+    public UpdateRestResourcesInput(String restProjectId, String restApplicationId, List<RestResourceDto> restResources, String forwardedEndpoint) {
         this.restProjectId = restProjectId;
         this.restApplicationId = restApplicationId;
         this.restResources = restResources;

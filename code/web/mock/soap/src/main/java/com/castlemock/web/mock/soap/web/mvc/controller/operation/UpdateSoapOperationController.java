@@ -20,9 +20,9 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsForwardedEndpointInput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
-import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
+import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import com.google.common.base.Preconditions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -94,9 +94,9 @@ public class UpdateSoapOperationController extends AbstractSoapViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{soapProjectId}/port/{soapPortId}/operation/update/confirm", method = RequestMethod.POST)
-    public ModelAndView updateEndpoint(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @ModelAttribute final UpdateSoapOperationsEndpointCommand updateSoapOperationsEndpointCommand) {
+    public ModelAndView updateEndpoint(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @ModelAttribute final UpdateSoapOperationsCommand updateSoapOperationsEndpointCommand) {
         Preconditions.checkNotNull(updateSoapOperationsEndpointCommand, "The update operation endpoint command cannot be null");
-        serviceProcessor.process(new UpdateSoapOperationsForwardedEndpointInput(soapProjectId, soapPortId, updateSoapOperationsEndpointCommand.getSoapOperations(), updateSoapOperationsEndpointCommand.getForwardedEndpoint()));
+        serviceProcessor.process(new UpdateSoapOperationsInput(soapProjectId, soapPortId, updateSoapOperationsEndpointCommand.getSoapOperations(), updateSoapOperationsEndpointCommand.getForwardedEndpoint()));
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId);
     }
 

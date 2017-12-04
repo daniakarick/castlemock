@@ -21,15 +21,15 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
-import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapPortsForwardedEndpointOutput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsInput;
+import com.castlemock.core.mock.soap.model.project.service.message.output.UpdateSoapPortsOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateSoapPortsForwardedEndpointService extends AbstractSoapProjectService implements Service<UpdateSoapPortsForwardedEndpointInput, UpdateSoapPortsForwardedEndpointOutput> {
+public class UpdateSoapPortsService extends AbstractSoapProjectService implements Service<UpdateSoapPortsInput, UpdateSoapPortsOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -40,8 +40,8 @@ public class UpdateSoapPortsForwardedEndpointService extends AbstractSoapProject
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<UpdateSoapPortsForwardedEndpointOutput> process(final ServiceTask<UpdateSoapPortsForwardedEndpointInput> serviceTask) {
-        final UpdateSoapPortsForwardedEndpointInput input = serviceTask.getInput();
+    public ServiceResult<UpdateSoapPortsOutput> process(final ServiceTask<UpdateSoapPortsInput> serviceTask) {
+        final UpdateSoapPortsInput input = serviceTask.getInput();
         for(SoapPortDto soapPortDto : input.getSoapPorts()){
             SoapPortDto soapPort = repository.findSoapPort(input.getSoapProjectId(), soapPortDto.getId());
             for(SoapOperationDto soapOperation : soapPort.getOperations()){
@@ -49,6 +49,6 @@ public class UpdateSoapPortsForwardedEndpointService extends AbstractSoapProject
                 repository.updateSoapOperation(input.getSoapProjectId(), soapPortDto.getId(), soapOperation.getId(), soapOperation);
             }
         }
-        return createServiceResult(new UpdateSoapPortsForwardedEndpointOutput());
+        return createServiceResult(new UpdateSoapPortsOutput());
     }
 }

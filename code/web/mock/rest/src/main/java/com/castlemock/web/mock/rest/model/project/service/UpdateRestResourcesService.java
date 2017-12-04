@@ -22,15 +22,15 @@ import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesForwardedEndpointInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestResourcesForwardedEndpointOutput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestResourcesInput;
+import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestResourcesOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateRestResourcesForwardedEndpointService extends AbstractRestProjectService implements Service<UpdateRestResourcesForwardedEndpointInput, UpdateRestResourcesForwardedEndpointOutput> {
+public class UpdateRestResourcesService extends AbstractRestProjectService implements Service<UpdateRestResourcesInput, UpdateRestResourcesOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -41,8 +41,8 @@ public class UpdateRestResourcesForwardedEndpointService extends AbstractRestPro
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<UpdateRestResourcesForwardedEndpointOutput> process(final ServiceTask<UpdateRestResourcesForwardedEndpointInput> serviceTask) {
-        final UpdateRestResourcesForwardedEndpointInput input = serviceTask.getInput();
+    public ServiceResult<UpdateRestResourcesOutput> process(final ServiceTask<UpdateRestResourcesInput> serviceTask) {
+        final UpdateRestResourcesInput input = serviceTask.getInput();
         final RestApplicationDto restApplication = repository.findRestApplication(input.getRestProjectId(), input.getRestApplicationId());
         for(RestResourceDto restResource : restApplication.getResources()){
             for(RestMethodDto restMethod : restResource.getMethods()){
@@ -50,6 +50,6 @@ public class UpdateRestResourcesForwardedEndpointService extends AbstractRestPro
                 repository.updateRestMethod(input.getRestProjectId(), input.getRestApplicationId(), restResource.getId(), restMethod.getId(), restMethod);
             }
         }
-        return createServiceResult(new UpdateRestResourcesForwardedEndpointOutput());
+        return createServiceResult(new UpdateRestResourcesOutput());
     }
 }

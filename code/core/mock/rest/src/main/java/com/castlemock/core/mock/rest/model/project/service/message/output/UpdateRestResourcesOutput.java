@@ -23,7 +23,7 @@ import com.castlemock.core.mock.rest.model.project.dto.RestProjectDto;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestMethodsForwardedEndpointOutput implements Output {
+public class UpdateRestResourcesOutput implements Output {
 
     private RestProjectDto updatedRestProject;
 

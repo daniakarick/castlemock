@@ -16,16 +16,15 @@
 
 package com.castlemock.web.mock.soap.web.mvc.controller.port;
 
-import com.castlemock.core.mock.soap.model.project.domain.SoapOperationStatus;
+import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapOperationInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapOperationsStatusInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapOperationOutput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.castlemock.web.mock.soap.web.mvc.command.operation.SoapOperationModifierCommand;
-import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsEndpointCommand;
+import com.castlemock.web.mock.soap.web.mvc.command.operation.UpdateSoapOperationsCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -52,8 +51,8 @@ public class SoapPortController extends AbstractSoapViewController {
     private static final String UPDATE_STATUS = "update";
     private static final String SOAP_OPERATION_MODIFIER_COMMAND = "soapOperationModifierCommand";
     private static final String UPDATE_ENDPOINTS = "update-endpoint";
-    private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_COMMAND = "updateSoapOperationsEndpointCommand";
-    private static final String UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE = "mock/soap/operation/updateSoapOperationsEndpoint";
+    private static final String UPDATE_SOAP_OPERATIONS_COMMAND = "updateSoapOperationsCommand";
+    private static final String UPDATE_SOAP_OPERATIONS_PAGE = "mock/soap/operation/updateSoapOperations";
     private static final Logger LOGGER = Logger.getLogger(SoapPortController.class);
 
     /**
@@ -94,21 +93,18 @@ public class SoapPortController extends AbstractSoapViewController {
     public ModelAndView portFunctionality(@PathVariable final String soapProjectId, @PathVariable final String soapPortId, @RequestParam final String action, @ModelAttribute final SoapOperationModifierCommand soapOperationModifierCommand) {
         LOGGER.debug("Requested SOAP port action: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
-            final SoapOperationStatus soapOperationStatus = SoapOperationStatus.valueOf(soapOperationModifierCommand.getSoapOperationStatus());
-            for(String operationId : soapOperationModifierCommand.getSoapOperationIds()){
-                serviceProcessor.process(new UpdateSoapOperationsStatusInput(soapProjectId, soapPortId, operationId, soapOperationStatus));
-            }
-        } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
             final List<SoapOperationDto> soapOperations = new ArrayList<SoapOperationDto>();
             for(String soapOperationId : soapOperationModifierCommand.getSoapOperationIds()){
                 final ReadSoapOperationOutput output = serviceProcessor.process(new ReadSoapOperationInput(soapProjectId, soapPortId, soapOperationId));
                 soapOperations.add(output.getSoapOperation());
             }
-            final ModelAndView model = createPartialModelAndView(UPDATE_SOAP_OPERATIONS_ENDPOINT_PAGE);
+            final ModelAndView model = createPartialModelAndView(UPDATE_SOAP_OPERATIONS_PAGE);
             model.addObject(SOAP_PROJECT_ID, soapProjectId);
             model.addObject(SOAP_PORT_ID, soapPortId);
             model.addObject(SOAP_OPERATIONS, soapOperations);
-            model.addObject(UPDATE_SOAP_OPERATIONS_ENDPOINT_COMMAND, new UpdateSoapOperationsEndpointCommand());
+            model.addObject(SOAP_OPERATION_STATUSES, getSoapOperationStatuses());
+            model.addObject(SOAP_MOCK_RESPONSE_STRATEGIES, SoapResponseStrategy.values());
+            model.addObject(UPDATE_SOAP_OPERATIONS_COMMAND, new UpdateSoapOperationsCommand());
             return model;
         }
         return redirect("/soap/project/" + soapProjectId + "/port/" + soapPortId);

@@ -16,19 +16,17 @@
 
 package com.castlemock.web.mock.rest.web.mvc.controller.project;
 
-import com.castlemock.core.mock.rest.model.project.domain.RestMethodStatus;
+import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestApplicationDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestApplicationInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestProjectInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestApplicationsStatusInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestApplicationOutput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestProjectOutput;
 import com.castlemock.web.mock.rest.web.mvc.command.application.DeleteRestApplicationsCommand;
 import com.castlemock.web.mock.rest.web.mvc.command.application.RestApplicationModifierCommand;
-import com.castlemock.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsEndpointCommand;
+import com.castlemock.web.mock.rest.web.mvc.command.application.UpdateRestApplicationsCommand;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import org.apache.log4j.Logger;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -52,9 +50,8 @@ public class RestProjectController extends AbstractRestViewController {
     private static final String DELETE_REST_APPLICATIONS_COMMAND = "deleteRestApplicationsCommand";
     private static final String DELETE_REST_APPLICATIONS_PAGE = "mock/rest/application/deleteRestApplications";
     private static final String UPDATE_STATUS = "update";
-    private static final String UPDATE_ENDPOINTS = "update-endpoint";
-    private static final String UPDATE_REST_APPLICATIONS_ENDPOINT_PAGE = "mock/rest/application/updateRestApplicationsEndpoint";
-    private static final String UPDATE_REST_APPLICATIONS_ENDPOINT_COMMAND = "updateRestApplicationsEndpointCommand";
+    private static final String UPDATE_REST_APPLICATIONS_PAGE = "mock/rest/application/updateRestApplications";
+    private static final String UPDATE_REST_APPLICATIONS_COMMAND = "updateRestApplicationsCommand";
     private static final String UPLOAD = "upload";
     private static final String UPLOAD_OUTCOME_SUCCESS = "success";
     private static final String UPLOAD_OUTCOME_ERROR = "error";
@@ -98,10 +95,18 @@ public class RestProjectController extends AbstractRestViewController {
     public ModelAndView projectFunctionality(@PathVariable final String projectId, @RequestParam final String action, @ModelAttribute final RestApplicationModifierCommand restApplicationModifierCommand) {
         LOGGER.debug("Requested REST project action requested: " + action);
         if(UPDATE_STATUS.equalsIgnoreCase(action)){
-            final RestMethodStatus restMethodStatus = RestMethodStatus.valueOf(restApplicationModifierCommand.getRestMethodStatus());
+            final List<RestApplicationDto> restApplicationDtos = new ArrayList<RestApplicationDto>();
             for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
-                serviceProcessor.process(new UpdateRestApplicationsStatusInput(projectId, restApplicationId, restMethodStatus));
+                final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, restApplicationId));
+                restApplicationDtos.add(output.getRestApplication());
             }
+            final ModelAndView model = createPartialModelAndView(UPDATE_REST_APPLICATIONS_PAGE);
+            model.addObject(REST_PROJECT_ID, projectId);
+            model.addObject(REST_APPLICATIONS, restApplicationDtos);
+            model.addObject(REST_METHOD_STATUSES, getRestMethodStatuses());
+            model.addObject(REST_RESPONSE_STRATEGIES, RestResponseStrategy.values());
+            model.addObject(UPDATE_REST_APPLICATIONS_COMMAND, new UpdateRestApplicationsCommand());
+            return model;
         } else if(DELETE_REST_APPLICATIONS.equalsIgnoreCase(action)) {
             final List<RestApplicationDto> restApplications = new ArrayList<RestApplicationDto>();
             for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
@@ -112,17 +117,6 @@ public class RestProjectController extends AbstractRestViewController {
             model.addObject(REST_PROJECT_ID, projectId);
             model.addObject(REST_APPLICATIONS, restApplications);
             model.addObject(DELETE_REST_APPLICATIONS_COMMAND, new DeleteRestApplicationsCommand());
-            return model;
-        } else if(UPDATE_ENDPOINTS.equalsIgnoreCase(action)){
-            final List<RestApplicationDto> restApplicationDtos = new ArrayList<RestApplicationDto>();
-            for(String restApplicationId : restApplicationModifierCommand.getRestApplicationIds()){
-                final ReadRestApplicationOutput output = serviceProcessor.process(new ReadRestApplicationInput(projectId, restApplicationId));
-                restApplicationDtos.add(output.getRestApplication());
-            }
-            final ModelAndView model = createPartialModelAndView(UPDATE_REST_APPLICATIONS_ENDPOINT_PAGE);
-            model.addObject(REST_PROJECT_ID, projectId);
-            model.addObject(REST_APPLICATIONS, restApplicationDtos);
-            model.addObject(UPDATE_REST_APPLICATIONS_ENDPOINT_COMMAND, new UpdateRestApplicationsEndpointCommand());
             return model;
         }
         return redirect("/rest/project/" + projectId);

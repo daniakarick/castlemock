@@ -122,12 +122,7 @@
                                 </table>
                             </div>
                             <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                                <form:select path="soapMockResponseStatus">
-                                    <c:forEach items="${soapMockResponseStatuses}" var="soapMockResponseStatus">
-                                        <form:option value="${soapMockResponseStatus}"><spring:message code="soap.type.soapmockresponsestatus.${soapMockResponseStatus}"/></form:option>
-                                    </c:forEach>
-                                </form:select>
-                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.update"/></span></button>
+                                <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapoperation.button.updatemockresponses"/></span></button>
                                 <button class="btn btn-danger demo-button-disabled" type="submit" name="action" value="delete"><i class="fa fa-trash"></i> <span><spring:message code="soap.soapoperation.button.deletemockresponse"/></span></button>
                             </sec:authorize>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

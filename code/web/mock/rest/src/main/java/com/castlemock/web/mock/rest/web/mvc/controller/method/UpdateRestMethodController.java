@@ -21,9 +21,9 @@ import com.castlemock.core.mock.rest.model.project.domain.RestResponseStrategy;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.service.message.input.ReadRestMethodInput;
 import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodInput;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodsForwardedEndpointInput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodsInput;
 import com.castlemock.core.mock.rest.model.project.service.message.output.ReadRestMethodOutput;
-import com.castlemock.web.mock.rest.web.mvc.command.method.UpdateRestMethodsEndpointCommand;
+import com.castlemock.web.mock.rest.web.mvc.command.method.UpdateRestMethodsCommand;
 import com.castlemock.web.mock.rest.web.mvc.controller.AbstractRestViewController;
 import com.google.common.base.Preconditions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -83,9 +83,9 @@ public class UpdateRestMethodController extends AbstractRestViewController {
      */
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     @RequestMapping(value = "/{restProjectId}/application/{restApplicationId}/resource/{restResourceId}/method/update/confirm", method = RequestMethod.POST)
-    public ModelAndView updateEndpoint(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @ModelAttribute final UpdateRestMethodsEndpointCommand updateRestMethodsEndpointCommand) {
+    public ModelAndView updateEndpoint(@PathVariable final String restProjectId, @PathVariable final String restApplicationId, @PathVariable final String restResourceId, @ModelAttribute final UpdateRestMethodsCommand updateRestMethodsEndpointCommand) {
         Preconditions.checkNotNull(updateRestMethodsEndpointCommand, "The update application endpoint command cannot be null");
-        serviceProcessor.process(new UpdateRestMethodsForwardedEndpointInput(restProjectId, restApplicationId, restResourceId, updateRestMethodsEndpointCommand.getRestMethods(), updateRestMethodsEndpointCommand.getForwardedEndpoint()));
+        serviceProcessor.process(new UpdateRestMethodsInput(restProjectId, restApplicationId, restResourceId, updateRestMethodsEndpointCommand.getRestMethods(), updateRestMethodsEndpointCommand.getForwardedEndpoint()));
         return redirect("/rest/project/" + restProjectId + "/application/" + restApplicationId + "/resource/" + restResourceId);
     }
 

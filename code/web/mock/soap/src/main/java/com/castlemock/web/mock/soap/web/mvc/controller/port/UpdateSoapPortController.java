@@ -21,7 +21,7 @@ import com.castlemock.core.mock.soap.model.project.domain.SoapResponseStrategy;
 import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 import com.castlemock.core.mock.soap.model.project.service.message.input.ReadSoapPortInput;
 import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortInput;
-import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsForwardedEndpointInput;
+import com.castlemock.core.mock.soap.model.project.service.message.input.UpdateSoapPortsInput;
 import com.castlemock.core.mock.soap.model.project.service.message.output.ReadSoapPortOutput;
 import com.castlemock.web.mock.soap.web.mvc.command.port.UpdateSoapPortsEndpointCommand;
 import com.castlemock.web.mock.soap.web.mvc.controller.AbstractSoapViewController;
@@ -97,7 +97,7 @@ public class UpdateSoapPortController extends AbstractSoapViewController {
     @RequestMapping(value = "/{projectId}/port/update/confirm", method = RequestMethod.POST)
     public ModelAndView updateEndpoint(@PathVariable final String projectId, @ModelAttribute final UpdateSoapPortsEndpointCommand updateSoapPortsEndpointCommand) {
         Preconditions.checkNotNull(updateSoapPortsEndpointCommand, "The update port endpoint command cannot be null");
-        serviceProcessor.process(new UpdateSoapPortsForwardedEndpointInput(projectId, updateSoapPortsEndpointCommand.getSoapPorts(), updateSoapPortsEndpointCommand.getForwardedEndpoint()));
+        serviceProcessor.process(new UpdateSoapPortsInput(projectId, updateSoapPortsEndpointCommand.getSoapPorts(), updateSoapPortsEndpointCommand.getForwardedEndpoint()));
         return redirect("/soap/project/" + projectId);
     }
 

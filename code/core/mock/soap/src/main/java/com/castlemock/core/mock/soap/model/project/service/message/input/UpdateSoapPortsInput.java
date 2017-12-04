@@ -18,7 +18,7 @@ package com.castlemock.core.mock.soap.model.project.service.message.input;
 
 import com.castlemock.core.basis.model.Input;
 import com.castlemock.core.basis.model.validation.NotNull;
-import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapPortDto;
 
 import java.util.List;
 
@@ -26,21 +26,18 @@ import java.util.List;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateSoapOperationsForwardedEndpointInput implements Input {
+public class UpdateSoapPortsInput implements Input {
 
     @NotNull
     private String soapProjectId;
     @NotNull
-    private String soapPortId;
-    @NotNull
-    private List<SoapOperationDto> soapOperations;
+    private List<SoapPortDto> soapPorts;
     @NotNull
     private String forwardedEndpoint;
 
-    public UpdateSoapOperationsForwardedEndpointInput(String soapProjectId, String soapPortId, List<SoapOperationDto> soapOperations, String forwardedEndpoint) {
+    public UpdateSoapPortsInput(String soapProjectId, List<SoapPortDto> soapPorts, String forwardedEndpoint) {
         this.soapProjectId = soapProjectId;
-        this.soapPortId = soapPortId;
-        this.soapOperations = soapOperations;
+        this.soapPorts = soapPorts;
         this.forwardedEndpoint = forwardedEndpoint;
     }
 
@@ -52,20 +49,12 @@ public class UpdateSoapOperationsForwardedEndpointInput implements Input {
         this.soapProjectId = soapProjectId;
     }
 
-    public String getSoapPortId() {
-        return soapPortId;
+    public List<SoapPortDto> getSoapPorts() {
+        return soapPorts;
     }
 
-    public void setSoapPortId(String soapPortId) {
-        this.soapPortId = soapPortId;
-    }
-
-    public List<SoapOperationDto> getSoapOperations() {
-        return soapOperations;
-    }
-
-    public void setSoapOperations(List<SoapOperationDto> soapOperations) {
-        this.soapOperations = soapOperations;
+    public void setSoapPorts(List<SoapPortDto> soapPorts) {
+        this.soapPorts = soapPorts;
     }
 
     public String getForwardedEndpoint() {

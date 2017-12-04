@@ -21,15 +21,15 @@ import com.castlemock.core.basis.model.ServiceResult;
 import com.castlemock.core.basis.model.ServiceTask;
 import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
 import com.castlemock.core.mock.rest.model.project.dto.RestResourceDto;
-import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodsForwardedEndpointInput;
-import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestMethodsForwardedEndpointOutput;
+import com.castlemock.core.mock.rest.model.project.service.message.input.UpdateRestMethodsInput;
+import com.castlemock.core.mock.rest.model.project.service.message.output.UpdateRestMethodsOutput;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 @org.springframework.stereotype.Service
-public class UpdateRestMethodsForwardedEndpointService extends AbstractRestProjectService implements Service<UpdateRestMethodsForwardedEndpointInput, UpdateRestMethodsForwardedEndpointOutput> {
+public class UpdateRestMethodsService extends AbstractRestProjectService implements Service<UpdateRestMethodsInput, UpdateRestMethodsOutput> {
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -40,13 +40,13 @@ public class UpdateRestMethodsForwardedEndpointService extends AbstractRestProje
      * @see ServiceResult
      */
     @Override
-    public ServiceResult<UpdateRestMethodsForwardedEndpointOutput> process(final ServiceTask<UpdateRestMethodsForwardedEndpointInput> serviceTask) {
-        final UpdateRestMethodsForwardedEndpointInput input = serviceTask.getInput();
+    public ServiceResult<UpdateRestMethodsOutput> process(final ServiceTask<UpdateRestMethodsInput> serviceTask) {
+        final UpdateRestMethodsInput input = serviceTask.getInput();
         final RestResourceDto restResource = repository.findRestResource(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId());
         for(RestMethodDto restMethod : restResource.getMethods()){
             restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
             repository.updateRestMethod(input.getRestProjectId(), input.getRestApplicationId(), input.getRestResourceId(), restMethod.getId(), restMethod);
         }
-        return createServiceResult(new UpdateRestMethodsForwardedEndpointOutput());
+        return createServiceResult(new UpdateRestMethodsOutput());
     }
 }

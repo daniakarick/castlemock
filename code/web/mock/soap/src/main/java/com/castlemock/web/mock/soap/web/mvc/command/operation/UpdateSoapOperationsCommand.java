@@ -14,30 +14,29 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.web.mvc.command.method;
+package com.castlemock.web.mock.soap.web.mvc.command.operation;
 
-
-import com.castlemock.core.mock.rest.model.project.dto.RestMethodDto;
+import com.castlemock.core.mock.soap.model.project.dto.SoapOperationDto;
 
 import java.util.List;
 
 /**
- * The UpdateRestMethodsEndpointCommand is a command class and is used to identify which methods
+ * The UpdateServicesEndpointCommand is a command class and is used to identify which operation
  * will be updated with a new endpoint
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class UpdateRestMethodsEndpointCommand {
+public class UpdateSoapOperationsCommand {
 
-    private List<RestMethodDto> restMethods;
+    private List<SoapOperationDto> soapOperations;
     private String forwardedEndpoint;
 
-    public List<RestMethodDto> getRestMethods() {
-        return restMethods;
+    public List<SoapOperationDto> getSoapOperations() {
+        return soapOperations;
     }
 
-    public void setRestMethods(List<RestMethodDto> restMethods) {
-        this.restMethods = restMethods;
+    public void setSoapOperations(List<SoapOperationDto> soapOperations) {
+        this.soapOperations = soapOperations;
     }
 
     /**

@@ -87,13 +87,7 @@
                         </table>
                     </div>
                     <sec:authorize access="hasAuthority('ADMIN') or hasAuthority('MODIFIER')">
-                        <form:select path="soapOperationStatus">
-                            <c:forEach items="${soapOperationStatuses}" var="operationStatus">
-                                <form:option value="${operationStatus}"><spring:message code="soap.type.soapoperationstatus.${operationStatus}"/></form:option>
-                            </c:forEach>
-                        </form:select>
-                        <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapport.button.updatestatus"/></span></button>
-                        <button class="btn btn-primary demo-button-disabled" type="submit" name="action" value="update-endpoint"><i class="fa fa-code-fork"></i> <span><spring:message code="soap.soapport.button.updateendpoint"/></span></button>
+                        <button class="btn btn-success demo-button-disabled" type="submit" name="action" value="update"><i class="fa fa-check-circle"></i> <span><spring:message code="soap.soapport.button.updateoperations"/></span></button>
                     </sec:authorize>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 

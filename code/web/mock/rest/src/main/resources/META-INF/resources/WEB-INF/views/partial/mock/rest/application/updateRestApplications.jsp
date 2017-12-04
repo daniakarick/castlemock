@@ -21,18 +21,18 @@
         <li><a href="${context}/web"><spring:message code="general.breadcrumb.home"/></a></li>
         <li><a href="${context}/web/rest/project/${restProjectId}"><spring:message code="rest.breadcrumb.project"/></a></li>
         <li><a href="${context}/web/rest/project/${restProjectId}/application/${restApplication.id}"><spring:message code="rest.breadcrumb.application"/></a></li>
-        <li class="active"><spring:message code="rest.updaterestapplicationsendpoint.header.updateapplication"/></li>
+        <li class="active"><spring:message code="rest.updaterestapplications.header.updateapplication"/></li>
     </ol>
 </div>
 <div class="container">
     <section>
         <div class="content-top">
-            <h1><spring:message code="rest.updaterestapplicationsendpoint.header.updateapplication"/></h1>
+            <h1><spring:message code="rest.updaterestapplications.header.updateapplication"/></h1>
         </div>
         <c:choose>
             <c:when test="${restApplications.size() > 0}">
-                <p><spring:message code="rest.updaterestapplicationsendpoint.label.confirmation"/></p>
-                <form:form action="${update_applications_endpoint_url}" method="POST" commandName="updateRestApplicationsEndpointCommand">
+                <p><spring:message code="rest.updaterestapplications.label.confirmation"/></p>
+                <form:form action="${update_applications_endpoint_url}" method="POST" commandName="updateRestApplicationsCommand">
                     <ul>
                         <c:forEach items="${restApplications}" var="restApplication" varStatus="loopStatus">
                             <li>${restApplication.name}</li>
@@ -41,17 +41,17 @@
                     </ul>
                     <table class="formTable">
                         <tr>
-                            <td class="column1"><label path="forwardedEndpoint"><spring:message code="rest.updaterestapplicationsendpoint.label.forwardedendpoint"/></label></td>
-                            <td class="column2"><form:input path="forwardedEndpoint" value="${updateRestApplicationsEndpointCommand.forwardedEndpoint}"/></td>
+                            <td class="column1"><label path="forwardedEndpoint"><spring:message code="rest.updaterestapplications.label.forwardedendpoint"/></label></td>
+                            <td class="column2"><form:input path="forwardedEndpoint" value="${updateRestApplicationsCommand.forwardedEndpoint}"/></td>
                         </tr>
                     </table>
-                    <button class="btn btn-success"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.updaterestapplicationsendpoint.button.updateapplications"/></span></button>
-                    <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplicationsendpoint.button.cancel"/></a>
+                    <button class="btn btn-success"><i class="fa fa-check-circle"></i> <span><spring:message code="rest.updaterestapplications.button.updateapplications"/></span></button>
+                    <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplications.button.cancel"/></a>
                 </form:form>
             </c:when>
             <c:otherwise>
-                <p><spring:message code="rest.updaterestapplicationsendpoint.label.noapplications"/></p>
-                <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplicationsendpoint.button.cancel"/></a>
+                <p><spring:message code="rest.updaterestapplications.label.noapplications"/></p>
+                <a href="<c:url value="/web/rest/project/${restProjectId}"/>" class="btn btn-primary"><i class="fa fa-times"></i> <spring:message code="rest.updaterestapplications.button.cancel"/></a>
             </c:otherwise>
         </c:choose>
     </section>
